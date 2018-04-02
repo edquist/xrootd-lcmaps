@@ -163,7 +163,9 @@ int XrdSecgsiAuthzKey(XrdSecEntity &entity, char **key)
      s += "::";
      s += entity.endorsements;
    }
-   *key = strdup(s.c_str());
+   *key = new char[s.length()+1];
+   memcpy(*key, s.c_str(), s.length());
+   (*key)[s.length()] = '\0';
    PRINT(inf_pfx << "Returning '" << s << "' of length " << s.length() << " as key.");
    return s.length() + 1;
 
